@@ -27,13 +27,20 @@ function Home() {
     return <div>Loading...</div>;
   } else {
     return (
-      <div className="container">
-        Home
+      <container fixed style={{
+        height: "100vh",
+        display: "flex",
+        flexWrap: "wrap",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#cfe8fc",
+      }}>
         
         {postList.map((post) => (
           <Post title={post.title} text={post.text}></Post>
         ))}
-      </div>
+        
+      </container>
     );
   }
 }
