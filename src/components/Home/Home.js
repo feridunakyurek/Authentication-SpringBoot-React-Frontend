@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Post from "../Post/Post";
+import PostForm from "../Post/PostForm";
 
 function Home() {
   const [error, setError] = useState(null); //ilk durum null. error olmayacak.
@@ -27,20 +28,28 @@ function Home() {
     return <div>Loading...</div>;
   } else {
     return (
-      <container fixed style={{
-        height: "100vh",
-        display: "flex",
-        flexWrap: "wrap",
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#cfe8fc",
-      }}>
-        
+      <div
+        fixed
+        style={{
+          height: "100vh",
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#cfe8fc",
+        }}
+      >
+
+        <PostForm userId = {1} userName = {"ddd"} title = {"title"} text = {"text"} ></PostForm>
         {postList.map((post) => (
-          <Post title={post.title} text={post.text}></Post>
+          <Post
+            userId={post.userId}
+            userName={post.userName}
+            title={post.title}
+            text={post.text}
+          ></Post>
         ))}
-        
-      </container>
+      </div>
     );
   }
 }
