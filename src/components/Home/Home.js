@@ -7,8 +7,8 @@ function Home() {
   const [isLoaded, setIsLoaded] = useState(false); //ilk durum false. yükleme olmayacak.
   const [postList, setPostList] = useState([]); //ilk durum boş liste. postlar olmayacak.
 
-  useEffect(() => {
-    fetch("http://localhost:8080/posts")
+  const refreshPosts = () => {
+    fetch("/posts")
       .then((res) => res.json())
       .then(
         (result) => {
@@ -21,7 +21,12 @@ function Home() {
           setError(error);
         }
       );
-  }, []);
+  };
+
+  useEffect(() => {
+    refreshPosts();
+  }, [postList]);
+
   if (error) {
     return <div>Error: {error.message}</div>;
   } else if (!isLoaded) {
@@ -31,7 +36,6 @@ function Home() {
       <div
         fixed
         style={{
-          height: "100vh",
           display: "flex",
           flexWrap: "wrap",
           alignItems: "center",
@@ -39,14 +43,19 @@ function Home() {
           backgroundColor: "#cfe8fc",
         }}
       >
-
-        <PostForm userId = {1} userName = {"ddd"} title = {"title"} text = {"text"} ></PostForm>
+        <PostForm
+          userId={1}
+          userName={"ddd"}
+          refreshPosts={refreshPosts}
+        ></PostForm>
         {postList.map((post) => (
           <Post
+            text={post.text}
+            postId={post.id}
+            likes={post.postLikes}
+            title={post.title}
             userId={post.userId}
             userName={post.userName}
-            title={post.title}
-            text={post.text}
           ></Post>
         ))}
       </div>
